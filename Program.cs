@@ -1,14 +1,11 @@
-﻿using System;
-
-class Program
+﻿class Program
 {
     static void Main()
     {
-        Deck deck = new Deck();
-        Console.WriteLine("カード枚数: " + deck.CardCount);
+        // GameManagerを作成
+        GameManager game = new GameManager();
 
-        Card c1 = deck.DrawCard();
-        Console.WriteLine("引いたカード: " + c1);
-        Console.WriteLine("残り枚数: " + deck.CardCount);
+        // ゲーム開始（カード配布＆表示）
+        game.StartGame();
     }
 }
