@@ -24,6 +24,6 @@
     // カードを文字列として表示
     public override string ToString()
     {
-        return "Rank";
+        return Rank;
     }
 }
