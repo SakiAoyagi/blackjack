@@ -32,6 +32,8 @@ public class GameManager
     /// <summary>
     /// 指定の枚数を手札に配る
     /// </summary>
+    /// <param name="hand">手札</param>
+    /// <param name="count">枚数</param>
     private void DealCards(List<Card> hand, int count)
     {
         for(int i = 0; i < count; i++)
@@ -41,7 +43,7 @@ public class GameManager
     }
 
     /// <summary>
-    /// ゲームをスタートさせるメソッド
+    /// ゲームをスタートさせる
     /// </summary>
     public void StartGame()
     {
@@ -59,22 +61,24 @@ public class GameManager
         {
             sb.AppendLine(card.ToString());
         }
+        // プレイヤーの点数を表示
+        sb.AppendLine("プレイヤーの点数: {CalculateHandValue(PlayerHand)}");
 
         // ディーラーの手札を表示
         sb.AppendLine("ディーラーの手札:");
         sb.AppendLine(DealerHand[0].ToString());
         sb.AppendLine("もう1枚は伏せられています");
+        // ディーラーの点数を表示
+        sb.AppendLine("ディーラーの点数: {CalculateHandValue(DealerHand)}");
 
-        // プレイヤーの点数を表示
-        sb.AppendLine("プレイヤーの点数: " + CalculateHandValue(PlayerHand));
-
-        // 最後にまとめて出力
+        // 出力
         Console.WriteLine(sb.ToString());
     }
     
     /// <summary>
-    /// 手札の合計点を計算するメソッド
+    /// 手札の合計点を計算する
     /// </summary>
+    /// <returns>合計点</returns>
     private int CalculateHandValue(List<Card> hand)
     {
         int total = 0;
