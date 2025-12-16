@@ -1,3 +1,5 @@
+using System.Text;
+
 /// <summary>
 /// ゲームの進行を管理するクラス
 /// </summary>
@@ -32,7 +34,7 @@ public class GameManager
     /// </summary>
     private void DealCards(List<Card> hand, int count)
     {
-        for(int cardIndex = 0; cardIndex < count; cardIndex++)
+        for(int i = 0; i < count; i++)
         {
             hand.Add(Deck.DrawCard());
         }
@@ -47,25 +49,39 @@ public class GameManager
         DealCards(PlayerHand, 2);
         // ディーラーに2枚
         DealCards(DealerHand, 2);
-        // プレイヤーの手札を表示する
-        Console.WriteLine("プレイヤーの手札");
+
+        // 出力用のStringBuilderを用意
+        var sb = new StringBuilder();
+
+        // プレイヤーの手札を表示
+        sb.AppendLine("プレイヤーの手札:");
         foreach (Card card in PlayerHand)
         {
-            Console.WriteLine(card);
+            sb.AppendLine(card.ToString());
         }
-        ShowDealerHand();
+
+        // ディーラーの手札を表示
+        sb.AppendLine("ディーラーの手札:");
+        sb.AppendLine(DealerHand[0].ToString());
+        sb.AppendLine("もう1枚は伏せられています");
+
+        // プレイヤーの点数を表示
+        sb.AppendLine("プレイヤーの点数: " + CalculateHandValue(PlayerHand));
+
+        // 最後にまとめて出力
+        Console.WriteLine(sb.ToString());
     }
-
+    
     /// <summary>
-    /// ディーラーの手札を表示する
+    /// 手札の合計点を計算するメソッド
     /// </summary>
-    private void ShowDealerHand()
+    private int CalculateHandValue(List<Card> hand)
     {
-        var dealerHandMessage = new System.Text.StringBuilder();
-        Console.WriteLine("ディーラーの手札: ");
-        Console.WriteLine(DealerHand[0]);
-        Console.WriteLine("もう1枚は伏せられています");
-
-        Console.WriteLine(dealerHandMessage.ToString());
-    }  
+        int total = 0;
+        foreach (Card card in hand)
+        {
+            total += card.Value;
+        }
+        return total;
+    }
 }
