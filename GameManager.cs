@@ -3,26 +3,38 @@
 /// </summary>
 public class GameManager
 {
-    private Deck deck;
-    private List<Card> playerHand;
-    private List<Card> dealerHand;
+    /// <summary>
+    /// ゲームで使用するデッキ
+    /// </summary>
+    private Deck Deck;
+
+    /// <summary>
+    /// プレイヤーの手札
+    /// </summary>
+    private List<Card> PlayerHand;
+
+    /// <summary>
+    /// ディーラーの手札
+    /// </summary>
+    private List<Card> DealerHand;
+
     /// <summary>
     /// コンストラクタ:デッキと手札を初期化
     /// </summary>
     public GameManager()
     {
-        deck = new Deck();
-        playerHand = new List<Card>();
-        dealerHand = new List<Card>();
+        Deck = new Deck();
+        PlayerHand = new List<Card>();
+        DealerHand = new List<Card>();
     }
     /// <summary>
-    /// 指定の枚数を手札にカードを配る
+    /// 指定の枚数を手札に配る
     /// </summary>
     private void DealCards(List<Card> hand, int count)
     {
-        for(int i = 0; i < count; i++)
+        for(int cardIndex = 0; cardIndex < count; cardIndex++)
         {
-            hand.Add(deck.DrawCard());
+            hand.Add(Deck.DrawCard());
         }
     }
 
@@ -32,18 +44,28 @@ public class GameManager
     public void StartGame()
     {
         // プレイヤーに2枚
-        DealCards(playerHand, 2);
+        DealCards(PlayerHand, 2);
         // ディーラーに2枚
-        DealCards(dealerHand, 2);
+        DealCards(DealerHand, 2);
         // プレイヤーの手札を表示する
         Console.WriteLine("プレイヤーの手札");
-        foreach (Card card in  playerHand)
+        foreach (Card card in PlayerHand)
         {
             Console.WriteLine(card);
         }
-        // ディーラーの手札を1枚だけ表示する
-        Console.WriteLine("ディーラーの手札: ");
-        Console.WriteLine(dealerHand[0]);
-        Console.WriteLine("もう1枚は伏せられています");
+        ShowDealerHand();
     }
+
+    /// <summary>
+    /// ディーラーの手札を表示する
+    /// </summary>
+    private void ShowDealerHand()
+    {
+        var dealerHandMessage = new System.Text.StringBuilder();
+        Console.WriteLine("ディーラーの手札: ");
+        Console.WriteLine(DealerHand[0]);
+        Console.WriteLine("もう1枚は伏せられています");
+
+        Console.WriteLine(dealerHandMessage.ToString());
+    }  
 }
