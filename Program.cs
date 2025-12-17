@@ -2,10 +2,16 @@
 {
     static void Main(string[] args)
     {
-        GameManager gameManager = new GameManager();
-        // ゲーム開始
-        gameManager.StartGame();
-        // ディーラーのターンを実行
-        gameManager.DealerTurn();
+        Deck deck = new Deck();
+        deck.Shuffle();
+
+        Player player = new Player();
+
+        // 最初にカードを2枚配る
+        player.AddCard(deck.DrawCard());
+        player.AddCard(deck.DrawCard());
+
+        // プレイヤーのターン開始（デッキを渡す）
+        player.PlayerTurn(deck);
     }
 }
