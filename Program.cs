@@ -1,11 +1,8 @@
 ﻿class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        // GameManagerを作成
-        GameManager game = new GameManager();
-
-        // ゲーム開始（カード配布＆表示）
-        game.StartGame();
+        GameManager gameManager = new GameManager();
+        gameManager.StartGame();
     }
 }
