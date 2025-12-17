@@ -11,6 +11,8 @@ public class Dealer : PlayerBase
         while(CalculateHandValue() < 17)
         {
             AddCard(deck.DrawCard());
+            Console.WriteLine($"ディーラーの点数: {CalculateHandValue()}");
         }
+        Console.WriteLine("ディーラーはスタンドしました");
     }
 }
