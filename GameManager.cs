@@ -101,4 +101,34 @@ public class GameManager
         // 出力
         Console.WriteLine(sb.ToString());
     }
+
+    /// <summary>
+    /// 勝敗判定
+    /// </summary>
+    public void JudgeWinner()
+    {
+        int PlayerScore = Player.CalculateHandValue();
+        int DealerScore = Dealer.CalculateHandValue();
+
+        if(PlayerScore > 21)
+        {
+            Console.WriteLine("プレイヤーはバストした。ディーラーの勝ち！");
+        }
+        else if (DealerScore > 21)
+        {
+            Console.WriteLine("ディーラーはバスト！プレイヤーの勝ち！");
+        }
+        else if (PlayerScore > DealerScore)
+        {
+            Console.WriteLine("プレイヤーの勝ち！");
+        }
+        else if (DealerScore > PlayerScore)
+        {
+            Console.WriteLine("ディーラーの勝ち！");
+        }
+        else
+        {
+            Console.WriteLine("引き分け！");
+        }
+    }
 }
