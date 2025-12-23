@@ -8,9 +8,10 @@ public class Dealer : PlayerBase
     /// <summary>
     /// ディーラーのターンを進める
     /// 手札が17点以上になるまでカードを引き続ける
-    /// バーストした場合はプレイヤーの勝ち
+    /// バーストした場合は false を返す。スタンドした場合は true を返す。
     /// </summary>
-    /// <param name="deck"></param>
+    /// <param name="deck">カードを引くデッキ</param>
+    /// <returns>true: スタンドしてターン終了 / false: バーストして負け</returns>
     public bool PlayTurn(Deck deck)
     {
         Console.WriteLine(GameManager.DealerTurnMessage);
@@ -37,7 +38,7 @@ public class Dealer : PlayerBase
     /// <summary>
     /// ディーラーの手札と点数を表示
     /// </summary>
-    /// <param name="header">表示の先頭に出す文字列</param>
+    /// <param name="header">表示の先頭に出すメッセージ</param>
     private void ShowHandStatus(string header = GameManager.DealerHandLabel)
     {
         var sb = new StringBuilder();
