@@ -13,16 +13,6 @@ public class Deck
     /// </summary>
     private List<Card> Cards = new List<Card>();
 
-    /// <summary>
-    /// 山札の残り枚数を返すプロパティ
-    /// </summary>
-    public int CardCount
-    {
-        get
-        {
-            return Cards.Count;
-        }
-    }
 
     /// <summary>
     /// デッキの中身を読み取り専用で公開
