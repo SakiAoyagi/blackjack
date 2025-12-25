@@ -13,7 +13,6 @@ public class Deck
     /// </summary>
     private List<Card> Cards = new List<Card>();
 
-
     /// <summary>
     /// デッキの中身を読み取り専用で公開
     /// </summary>
