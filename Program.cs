@@ -1,29 +1,36 @@
-﻿public class Card
+﻿class Program
 {
-    public string Rank {get;}   // A, 2, 3, ..., K(変更できない)
-    public int Value {get;}     // 点数(変更できない)
+    static void Main(string[] args)
+    {
+        while (true)
+        {
+            GameManager game = new GameManager();
 
-    // コンストラクタ：カードの生成時ランクを渡す
-    public Card(string rank)
-    {
-        Rank = rank;
-        Value = CalculateValue(rank);
-    }
+            game.StartGame();
+            bool PlayerAlive = game.PlayerTurn();
 
-    /// <summary>
-    /// 点数を計算するメソッド
-    /// </summary>
-    /// <param name="rank"></param>
-    /// <returns></returns>
-    private int CalculateValue(string rank)
-    {
-        if (rank == "A") return 1;       // Aは1点（）
-        if (rank == "J" || rank == "Q" || rank == "K") return 10;
-        return int.Parse(rank);          // 2〜10はそのまま数値
-    }
-    // カードを文字列として表示
-    public override string ToString()
-    {
-        return "Rank";
+            if(PlayerAlive)
+            {
+                bool DealerAlive = game.DealerTurn();
+
+                if(DealerAlive)
+                {
+                    game.JudgeWinner();
+                }            
+            }
+            
+            Console.WriteLine("\nもう一度遊びますか？ (yes/no)");
+            string input = Console.ReadLine().ToLower();
+
+            if (input == "yes")
+            {
+                Console.WriteLine("\nもう一度遊びます！\n");
+            }
+            else
+            {
+                Console.WriteLine("ゲームを終了します。また遊んでね！");
+                return;
+            }
+        }    
     }
 }
