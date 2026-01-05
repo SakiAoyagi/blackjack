@@ -1,10 +1,10 @@
 /// <summary>
-/// トランプの山札を管理するクラス
+/// トランプのデッキを管理するクラス
 /// </summary>
 public class Deck
 {
     /// <summary>
-    /// トランプのスート(ハート・スペード・クラブ)の種類数
+    /// トランプのスート(ハート・スペード・クラブ・ダイヤ)の種類数
     /// </summary>
     private const int SuitCount = 4;
 
@@ -14,7 +14,7 @@ public class Deck
     private readonly List<Card> Cards = new List<Card>();
 
     /// <summary>
-    /// コンストラクタ：トランプのカードを作りシャッフルする
+    /// トランプのカードを作りシャッフルする
     /// </summary>
     public Deck()
     {
@@ -24,6 +24,7 @@ public class Deck
 
     /// <summary>
     /// トランプを52枚生成する
+    /// スート4種類　× 13種類 = 52枚
     /// </summary>
     private void GenerateCards()
     {  
@@ -38,15 +39,17 @@ public class Deck
         }
     }
     /// <summary>
-    /// シャッフルする
+    /// デッキをシャッフルする
+    /// 後ろから順に、混ざっていないカードとランダムに入れ替える
     /// </summary>
     public void Shuffle()
     {
         Random random = new Random();
+
+        // デッキの後ろから順にカードを入れ替え
         for (int i  = Cards.Count -1; i > 0; i--)
         {
             int randomIndex = random.Next(i + 1); 
-            // 入れ替え処理(まだ混ぜていないカードの中だけランダムに入れ替えるため、後ろから順に処理する)
             Card temp = Cards[i];
             Cards[i] = Cards[randomIndex];
             Cards[randomIndex] = temp;
@@ -54,17 +57,17 @@ public class Deck
     }
 
     /// <summary>
-    /// カードを引く
+    /// デッキの末尾からカードを1枚引く
     /// </summary>
     /// <returns>引いたカード</returns>
-    public Card DrawCard()
+       public Card DrawCard()
     {
+        // デッキの1番後ろのカードのインデックスを取得
         int lastIndex = Cards.Count - 1;
+        // 引くカードを取得
         Card drawnCard = Cards[lastIndex];
-        // 山札から削除
+        // デッキから削除
         Cards.RemoveAt(lastIndex);
         return drawnCard;
     }
 }
-
-

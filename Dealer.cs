@@ -5,10 +5,10 @@
 public class Dealer : PlayerBase
 {
     /// <summary>
-    /// ディーラーが追加でカードを引くかどうかの基準
+    /// ディーラーがスタンドする基準値
     /// 17以上ならスタンド、16以下ならヒット
     /// </summary>
-    private const int DealerStandThreshold = 17;
+    private const int DealerStandValue = 17;
 
     /// <summary>
     /// ディーラーのターンを進める
@@ -19,7 +19,7 @@ public class Dealer : PlayerBase
     /// <returns>true: スタンドしてターン終了 / false: バーストして負け</returns>
     public bool PlayTurn(Deck deck)
     {
-        while (CalculateHandValue() < DealerStandThreshold)
+        while (CalculateHandValue() < DealerStandValue)
         {
             AddCard(deck.DrawCard());
 

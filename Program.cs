@@ -7,19 +7,19 @@
             GameManager game = new GameManager();
 
             game.StartGame();
-            bool PlayerAlive = game.PlayerTurn();
+            bool playerAlive = game.PlayerTurn();
 
-            if(PlayerAlive)
+            if(playerAlive)
             {
-                bool DealerAlive = game.DealerTurn();
+                bool dealerAlive = game.DealerTurn();
 
-                if(DealerAlive)
+                if(dealerAlive)
                 {
                     game.JudgeWinner();
                 }            
             }
             
-            Console.WriteLine("\nもう一度遊びますか？ (yes/no)");
+            Console.WriteLine("\nもう一度遊びますか？ (yes/それ以外は終了");
             string input = Console.ReadLine().ToLower();
 
             if (input == "yes")

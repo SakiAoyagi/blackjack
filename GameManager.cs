@@ -46,7 +46,7 @@ public class GameManager
     private const string RevealDealerCardMessage = "ディーラーのカードを公開します:";
 
     /// <summary>
-    /// ゲーム開始時に配る最初の手札の枚数
+    /// ゲーム開始時に配る最初の手札の枚数(ブラックジャックの基本ルールにより2枚で固定)
     /// </summary>
     private const int InitialHandCount = 2;
 
@@ -66,19 +66,6 @@ public class GameManager
     private Dealer Dealer = new Dealer();
 
     /// <summary>
-    /// 指定の枚数を手札に配る
-    /// </summary>
-    /// <param name="participant">カードを受け取る対象者</param>
-    /// <param name="count">配る枚数</param>
-    private void DealCards(PlayerBase participant, int count)
-    {
-        for(int i = 0; i < count; i++)
-        {
-            participant.AddCard(Deck.DrawCard());
-        }
-    }
-
-    /// <summary>
     /// ゲームをスタートさせる(初期手札の配布と表示)
     /// </summary>
     public void StartGame()
@@ -93,14 +80,8 @@ public class GameManager
         // ディーラーに2枚
         DealCards(Dealer, InitialHandCount);
 
-        // プレイヤーの手札を表示
-        sb.AppendLine(PlayerHandLabel);
-        foreach (Card card in Player.Hand)
-        {
-            sb.AppendLine(card.Rank);
-        }
-        // プレイヤーの点数を表示
-        sb.AppendLine($"プレイヤーの点数: {Player.CalculateHandValue()}");
+        // プレイヤーの手札と点数をまとめて表示
+        AppendHand(sb, PlayerHandLabel, Player);
 
         // ディーラーの手札を1枚だけ表示
         sb.AppendLine(DealerHandLabel);
@@ -164,12 +145,15 @@ public class GameManager
     /// </summary>
     private void ShowPlayerHand()
     {
-        Console.WriteLine(PlayerHandLabel);
+        var sb = new StringBuilder();
+        sb.AppendLine(PlayerHandLabel);
+
         foreach (var card in Player.Hand)
         {
-            Console.WriteLine(card.Rank);
+            sb.AppendLine(card.Rank);
         }
-        Console.WriteLine($"プレイヤーの点数: {Player.CalculateHandValue()}");
+        sb.AppendLine($"プレイヤーの点数: {Player.CalculateHandValue()}");
+        Console.WriteLine(sb.ToString());
     }
 
     /// <summary>
@@ -178,8 +162,9 @@ public class GameManager
     /// <returns> true:ディーラーがバーストせず生存/ false:バースト</returns>
     public bool DealerTurn()
     {
-        Console.WriteLine(DealerTurnMessage);
         var sb = new StringBuilder();
+
+        sb.AppendLine(DealerTurnMessage);
 
         // 伏せていたカードを公開
         sb.AppendLine(RevealDealerCardMessage);
@@ -189,10 +174,10 @@ public class GameManager
         }
 
         // ディーラーのターンを実行
-        bool DealerAlive = Dealer.PlayTurn(Deck);
+        bool dealerAlive = Dealer.PlayTurn(Deck);
 
         // ディーラーがバーストしていなければ、最終的な手札と点数を表示
-        if(DealerAlive)
+        if(dealerAlive)
         {
 
             AppendHand(sb, DealerHandLabel, Dealer);
@@ -203,7 +188,7 @@ public class GameManager
         }
         
         Console.WriteLine(sb.ToString());
-        return DealerAlive;
+        return dealerAlive;
     }
 
     /// <summary>
@@ -211,24 +196,24 @@ public class GameManager
     /// </summary>
     public void JudgeWinner()
     {
-        int PlayerScore = Player.CalculateHandValue();
-        int DealerScore = Dealer.CalculateHandValue();
+        int playerScore = Player.CalculateHandValue();
+        int dealerScore = Dealer.CalculateHandValue();
 
         var sb = new StringBuilder();
 
-        if (PlayerScore > 21)
+        if (playerScore > 21)
         {
             sb.AppendLine("プレイヤーはバースト！ディーラーの勝ち！");
         }
-        else if (DealerScore > 21)
+        else if (dealerScore > 21)
         {
             sb.AppendLine("ディーラーはバースト！プレイヤーの勝ち！");
         }
-        else if (PlayerScore > DealerScore)
+        else if (playerScore > dealerScore)
         {
             sb.AppendLine("プレイヤーの勝ち！");
         }
-        else if (DealerScore > PlayerScore)
+        else if (dealerScore > playerScore)
         {
             sb.AppendLine("ディーラーの勝ち！");
         }
@@ -237,6 +222,19 @@ public class GameManager
             sb.AppendLine("引き分け！");
         }
         Console.WriteLine(sb.ToString());
+    }
+
+    /// <summary>
+    /// 指定の枚数を手札に配る
+    /// </summary>
+    /// <param name="participant">カードを受け取る対象者</param>
+    /// <param name="count">配る枚数</param>
+    private void DealCards(PlayerBase participant, int count)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            participant.AddCard(Deck.DrawCard());
+        }
     }
 
     /// <summary>

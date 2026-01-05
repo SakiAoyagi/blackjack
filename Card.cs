@@ -6,12 +6,12 @@ public class Card
     /// <summary>
     /// カードのランク(A,2~10,J,Q,K)
     /// </summary>
-    public string Rank {get;}
+    public string Rank { get; }
 
     /// <summary>
     /// カードの点数(A=1, 数字はそのまま, J/Q/K=10) 
     /// </summary>
-    public int PointValue {get;}  
+    public int PointValue { get; }
 
     /// <summary>
     /// コンストラクタ:カードの生成時ランクを渡す
