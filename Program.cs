@@ -1,29 +1,84 @@
-﻿public class Card
+﻿class Program
 {
-    public string Rank {get;}   // A, 2, 3, ..., K(変更できない)
-    public int Value {get;}     // 点数(変更できない)
-
-    // コンストラクタ：カードの生成時ランクを渡す
-    public Card(string rank)
+    /// <summary>
+    /// 無効な入力が行われたときにメッセージを表示
+    /// </summary>
+    static void WarnInvalid()
     {
-        Rank = rank;
-        Value = CalculateValue(rank);
+        Console.WriteLine("入力が確認できませんでした。yes または no を入力してください。");
     }
 
     /// <summary>
-    /// 点数を計算するメソッド
+    /// 初回の開始確認と、ゲーム全体の流れを管理。
     /// </summary>
-    /// <param name="rank"></param>
-    /// <returns></returns>
-    private int CalculateValue(string rank)
+    /// <param name="args">コマンドラインから渡される値</param>
+    static void Main(string[] args)
     {
-        if (rank == "A") return 1;       // Aは1点（）
-        if (rank == "J" || rank == "Q" || rank == "K") return 10;
-        return int.Parse(rank);          // 2〜10はそのまま数値
-    }
-    // カードを文字列として表示
-    public override string ToString()
-    {
-        return "Rank";
+        bool isFirstGame = true;
+
+        while (true)
+        {
+            // (初回のみ)ゲーム開始の確認
+            if(isFirstGame)
+            {
+                Console.WriteLine("==ブラックジャックへようこそ！==");
+                Console.WriteLine("ゲームを開始しますか？(yes/no)");
+
+                string? start = Console.ReadLine();
+
+                if(start == null)
+                {
+                    WarnInvalid();
+                    continue;
+                }
+
+                start = start.ToLower();
+                if(start != "yes")
+                {
+                    Console.WriteLine("ゲームを終了します。また遊んでね！");
+                    return;
+                }
+                isFirstGame = false;
+            }
+
+            // ゲーム本編の処理
+            GameManager game = new GameManager();
+
+            game.StartGame();
+            bool playerAlive = game.PlayerTurn();
+
+            // プレイヤーがバーストしていなかった場合の処理
+            if(playerAlive)
+            {
+                bool dealerAlive = game.DealerTurn();
+
+                if(dealerAlive)
+                {
+                    game.JudgeWinner();
+                }            
+            }
+            
+            // 再プレイするか確認
+            Console.WriteLine("\nもう一度遊びますか？ (yes/それ以外は終了)");
+            string? input = Console.ReadLine();
+
+            if(input == null)
+            {
+                WarnInvalid();
+                continue;
+            }
+
+            input = input.ToLower();
+
+            if (input == "yes")
+            {
+                Console.WriteLine("\nもう一度遊びます！\n");
+            }
+            else
+            {
+                Console.WriteLine("ゲームを終了します。また遊んでね！");
+                return;
+            }
+        }    
     }
 }
