@@ -6,12 +6,12 @@ public class PlayerBase
     /// <summary>
     /// プレイヤー／ディーラーの手札
     /// </summary>
-    public List<Card> Hand { get; } = new List<Card>();
+    private List<Card> Hand { get; } = new List<Card>();
 
     /// <summary>
     /// ブラックジャックの上限値（21）
     /// </summary>
-     private const int BlackjackLimit = 21;
+    private const int BlackjackLimit = 21;
 
     /// <summary>
     /// 手札にカードを追加
@@ -44,5 +44,28 @@ public class PlayerBase
     public bool IsBurst()
     {
         return CalculateHandValue() > BlackjackLimit;
+    }
+
+    /// <summary>
+    /// 手札を表示用の文字列として返す
+    /// </summary>
+    /// <returns>手札を改行しながら並べた文字列</returns>
+    public string GetHandString()
+    {
+        var sb = new StringBuilder();
+        foreach (var card in Hand)
+        {
+            sb.AppendLine(card.Rank);
+        }
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// 手札の1枚目のランクを返す
+    /// </summary>
+    /// <returns>1枚目のカードのランク</returns>
+    public string GetFirstCardRank()
+    {
+        return Hand[0].Rank;
     }
 }
