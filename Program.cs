@@ -1,14 +1,6 @@
 ﻿class Program
 {
     /// <summary>
-    /// 無効な入力が行われたときにメッセージを表示
-    /// </summary>
-    static void WarnInvalid()
-    {
-        Console.WriteLine("入力が確認できませんでした。yes または no を入力してください。");
-    }
-
-    /// <summary>
     /// 初回のゲーム開始確認・ゲーム本編・再プレイ確認の流れを管理
     /// </summary>
     /// <param name="args">コマンドラインから渡される値</param>
@@ -60,7 +52,7 @@
             {
                 return false;
             }
-            WarnInvalid();
+            Console.WriteLine("無効な入力です。yes か no を入力してください。");
         }
     }       
 
